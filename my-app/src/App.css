@@ -1,0 +1,320 @@
+/* NAVBAR */
+
+.navbar {
+  height: 72px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #5b4cff;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-links a:hover {
+  color: #5b4cff;
+}
+
+.login-btn {
+  background: #5b4cff;
+  color: white;
+  padding: 11px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+
+/* COMMON */
+
+.page {
+  min-height: calc(100vh - 72px);
+}
+
+.badge {
+  color: #5b4cff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+
+/* HERO */
+
+.hero {
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at top, #eeeaff, transparent 55%),
+    #ffffff;
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 60px 20px;
+}
+
+.hero h1 {
+  font-size: 64px;
+  line-height: 1.05;
+  margin: 20px 0;
+  color: #111827;
+}
+
+.hero h1 span,
+.simple-page h1 span {
+  color: #5b4cff;
+}
+
+.hero-text {
+  max-width: 600px;
+  margin: auto;
+  color: #666;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 35px;
+}
+
+
+/* BUTTONS */
+
+.primary-btn,
+.secondary-btn {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 9px;
+  text-decoration: none;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: #5b4cff;
+  color: white;
+}
+
+.primary-btn:hover {
+  background: #4538d0;
+}
+
+.secondary-btn {
+  background: #f1f0ff;
+  color: #5b4cff;
+}
+
+
+/* FEATURES */
+
+.features {
+  padding: 100px 7%;
+  background: #fafafa;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-heading p,
+.news-preview p {
+  color: #5b4cff;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.section-heading h2,
+.news-preview h2 {
+  font-size: 38px;
+  color: #111827;
+}
+
+.feature-grid {
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.feature-card {
+  padding: 40px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 18px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+.feature-icon {
+  font-size: 35px;
+}
+
+.feature-card h3 {
+  font-size: 24px;
+  color: #111827;
+}
+
+.feature-card p {
+  color: #666;
+  line-height: 1.7;
+}
+
+.feature-card span {
+  color: #5b4cff;
+  font-weight: 600;
+}
+
+
+/* NEWS */
+
+.news-preview {
+  padding: 80px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-btn {
+  color: #5b4cff;
+  text-decoration: none;
+}
+
+
+/* INNER PAGES */
+
+.simple-page {
+  padding: 120px 10%;
+  text-align: center;
+  background: #fafaff;
+}
+
+.simple-page h1 {
+  max-width: 800px;
+  margin: 20px auto;
+  font-size: 55px;
+  color: #111827;
+}
+
+.simple-page > p:not(.badge) {
+  max-width: 600px;
+  margin: 20px auto 35px;
+  color: #666;
+  line-height: 1.7;
+}
+
+.news-box {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 40px;
+  background: white;
+  border-radius: 15px;
+  border: 1px solid #eee;
+}
+
+
+/* LOGIN */
+
+.login-page {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafaff;
+}
+
+.login-box {
+  width: 400px;
+  padding: 45px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+}
+
+.login-box h1 {
+  font-size: 36px;
+  color: #111827;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.login-box .primary-btn {
+  width: 100%;
+  margin-top: 15px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 44px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .simple-page h1 {
+    font-size: 40px;
+  }
+
+  .news-preview {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+}
