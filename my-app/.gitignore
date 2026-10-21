@@ -22,3 +22,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Secrets
+.env
+.env.*
+!.env.example
+application-local.properties
+
+# React
+my-app/node_modules/
+my-app/dist/
+
+# Java / Maven
+bizmate-backend/target/
+
+# IDE
+.vscode/
+.idea/

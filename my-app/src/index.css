@@ -1,9 +1,970 @@
-* {
+/* Global reset */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  color: #111827;
+  min-width: 320px;
+  min-height: 100vh;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #475569;
+  background-color: #f7faff;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 3px;
+}
+
+
+/* ========================================
+   BIZMATE AI - START BUSINESS PAGE
+   UI ONLY - PRESERVES EXISTING FUNCTIONALITY
+======================================== */
+
+.business-question-page {
+  min-height: 100vh;
+  padding: 54px 22px 80px;
+  background:
+    radial-gradient(ellipse at 5% 0%, #e5efff 0, transparent 35%),
+    radial-gradient(ellipse at 95% 35%, #edf5ff 0, transparent 30%),
+    #f7faff;
+}
+
+.business-question-page,
+.business-question-page * {
+  box-sizing: border-box;
+}
+
+.question-container {
+  width: min(100%, 920px);
+  margin: 0 auto;
+}
+
+.question-header {
+  max-width: 720px;
+  margin: 0 auto 35px;
+  text-align: center;
+}
+
+.business-question-page .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 18px;
+  padding: 9px 15px;
+  color: #1d4ed8;
+  background: #e8f1ff;
+  border: 1px solid #d2e3ff;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.question-header h1 {
+  margin: 0;
+  color: #10213d;
+  font-size: clamp(32px, 5vw, 46px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -1.6px;
+}
+
+.question-header h1 span {
+  color: #2563eb;
+}
+
+.question-subtitle {
+  max-width: 630px;
+  margin: 17px auto 0;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+/* Progress indicator */
+
+.progress-section {
+  margin: 0 auto 18px;
+  padding: 19px 23px;
+  background: #ffffff;
+  border: 1px solid #e0e9f6;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(16, 33, 61, 0.035);
+}
+
+.progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: #53647e;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.progress-info span:last-child {
+  color: #2563eb;
+}
+
+.progress-bar {
+  height: 8px;
+  overflow: hidden;
+  background: #eaf0fa;
+  border-radius: 100px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  border-radius: inherit;
+  transition: width 0.35s ease;
+}
+
+/* Question card */
+
+.business-question-page .question-card {
+  padding: clamp(23px, 5vw, 40px);
+  background: #ffffff;
+  border: 1px solid #dfe8f5;
+  border-radius: 22px;
+  box-shadow: 0 16px 45px rgba(16, 33, 61, 0.07);
+}
+
+.question-card h2 {
+  margin: 0 0 27px;
+  color: #10213d;
+  font-size: clamp(21px, 3vw, 28px);
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: -0.5px;
+}
+
+.business-question-page .business-input {
+  display: block;
+  width: 100%;
+  min-height: 56px;
+  padding: 15px 17px;
+  color: #10213d;
+  background: #fbfdff;
+  border: 1px solid #d5e1f0;
+  border-radius: 12px;
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.business-question-page .business-input::placeholder {
+  color: #94a3b8;
+}
+
+.business-question-page .business-input:focus {
+  background: #ffffff;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.11);
+}
+
+/* Override the homepage .business-options styles only on this page */
+
+.business-question-page .business-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.business-question-page .option-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 55px;
+  padding: 14px 16px;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid #dce5f1;
+  border-radius: 12px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.5;
+  transition: background 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.business-question-page .option-button:hover:not(:disabled) {
+  background: #f5f9ff;
+  border-color: #93baf7;
+  transform: translateY(-1px);
+}
+
+.business-question-page .option-button.selected {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.08);
+}
+
+.business-question-page .option-button span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  color: #ffffff;
+  background: #2563eb;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Questionnaire buttons */
+
+.question-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 32px;
+  padding-top: 23px;
+  border-top: 1px solid #edf1f7;
+}
+
+.right-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.business-question-page .next-button,
+.business-question-page .back-button,
+.business-question-page .skip-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 45px;
+  padding: 12px 18px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 750;
+  transition: background 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.business-question-page .next-button {
+  color: #ffffff;
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.business-question-page .next-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.19);
+  transform: translateY(-1px);
+}
+
+.business-question-page .back-button {
+  color: #334155;
+  background: #ffffff;
+  border-color: #d7e1ee;
+}
+
+.business-question-page .back-button:hover:not(:disabled) {
+  color: #1d4ed8;
+  background: #f1f6ff;
+  border-color: #a8c8fa;
+}
+
+.business-question-page .skip-button {
+  color: #64748b;
+  background: transparent;
+  border-color: transparent;
+}
+
+.business-question-page .skip-button:hover:not(:disabled) {
+  color: #1d4ed8;
+  background: #eff6ff;
+}
+
+.business-question-page button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.skip-info {
+  max-width: 600px;
+  margin: 17px auto 0;
+  color: #7b8ba1;
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* ========================================
+   ANALYSIS RESULT - REPORT HEADER
+======================================== */
+
+.analysis-result {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: reportFadeIn 0.4s ease both;
+}
+
+@keyframes reportFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.analysis-header {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(25px, 5vw, 39px);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(147, 197, 253, 0.3), transparent 36%),
+    linear-gradient(135deg, #ffffff, #f0f6ff);
+  border: 1px solid #d7e5f8;
+  border-radius: 21px;
+  box-shadow: 0 10px 28px rgba(16, 33, 61, 0.045);
+}
+
+.analysis-header h2 {
+  margin: 0 0 12px;
+  color: #10213d;
+  font-size: clamp(25px, 4vw, 34px);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.9px;
+}
+
+.analysis-header > p:last-child {
+  max-width: 700px;
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* ========================================
+   MARKDOWN ANALYSIS CONTENT
+   Same answer, more readable presentation
+======================================== */
+
+.business-question-page .analysis-content {
+  min-width: 0;
+  padding: clamp(23px, 4.5vw, 39px);
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #dfe8f4;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(16, 33, 61, 0.045);
+  overflow-wrap: anywhere;
+  line-height: 1.85;
+  font-size: 14px;
+}
+
+/* Markdown headings */
+
+.business-question-page .analysis-content h1,
+.business-question-page .analysis-content h2,
+.business-question-page .analysis-content h3,
+.business-question-page .analysis-content h4 {
+  color: #10213d;
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: -0.35px;
+}
+
+.business-question-page .analysis-content h1 {
+  margin: 0 0 22px;
+  padding-bottom: 17px;
+  border-bottom: 2px solid #dbeafe;
+  font-size: clamp(24px, 4vw, 31px);
+}
+
+.business-question-page .analysis-content h2 {
+  margin: 30px 0 14px;
+  padding: 0 0 10px 14px;
+  border-bottom: 1px solid #e6edf7;
+  border-left: 4px solid #3b82f6;
+  font-size: clamp(19px, 3vw, 23px);
+}
+
+.business-question-page .analysis-content h3 {
+  margin: 23px 0 10px;
+  color: #1d4ed8;
+  font-size: 17px;
+}
+
+.business-question-page .analysis-content h4 {
+  margin: 19px 0 9px;
+  color: #334155;
+  font-size: 15px;
+}
+
+.business-question-page .analysis-content h1:first-child,
+.business-question-page .analysis-content h2:first-child,
+.business-question-page .analysis-content h3:first-child {
+  margin-top: 0;
+}
+
+.business-question-page .analysis-content p {
+  margin: 11px 0 16px;
+  color: #526176;
+  line-height: 1.9;
+}
+
+.business-question-page .analysis-content strong {
+  color: #1e3a5f;
+  font-weight: 750;
+}
+
+.business-question-page .analysis-content em {
+  color: #475569;
+}
+
+/* Lists */
+
+.business-question-page .analysis-content ul,
+.business-question-page .analysis-content ol {
+  margin: 13px 0 20px;
+  padding-left: 25px;
+}
+
+.business-question-page .analysis-content li {
+  margin: 8px 0;
+  padding-left: 4px;
+  color: #526176;
+  line-height: 1.85;
+}
+
+.business-question-page .analysis-content li::marker {
+  color: #3b82f6;
+  font-weight: 800;
+}
+
+.business-question-page .analysis-content li > ul,
+.business-question-page .analysis-content li > ol {
+  margin-top: 7px;
+  margin-bottom: 9px;
+}
+
+/* Tables */
+
+.business-question-page .analysis-content table {
+  display: block;
+  width: 100%;
+  margin: 20px 0 25px;
+  overflow-x: auto;
+  border: 1px solid #dce6f3;
+  border-radius: 12px;
+  border-spacing: 0;
+  border-collapse: separate;
+  background: #ffffff;
+  font-size: 12px;
+}
+
+.business-question-page .analysis-content thead {
+  background: #eff6ff;
+}
+
+.business-question-page .analysis-content th {
+  padding: 13px 15px;
+  color: #1e40af;
+  font-weight: 800;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid #dce6f3;
+}
+
+.business-question-page .analysis-content td {
+  min-width: 100px;
+  padding: 12px 15px;
+  color: #526176;
+  vertical-align: top;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.business-question-page .analysis-content tr:last-child td {
+  border-bottom: 0;
+}
+
+.business-question-page .analysis-content tbody tr:nth-child(even) {
+  background: #f9fbff;
+}
+
+/* Quotes, links, code, and separators */
+
+.business-question-page .analysis-content blockquote {
+  margin: 20px 0;
+  padding: 15px 19px;
+  background: #f2f7ff;
+  border-left: 4px solid #60a5fa;
+  border-radius: 0 10px 10px 0;
+}
+
+.business-question-page .analysis-content blockquote p {
+  margin: 0;
+}
+
+.business-question-page .analysis-content a {
+  color: #2563eb;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.business-question-page .analysis-content a:hover {
+  color: #1d4ed8;
+}
+
+.business-question-page .analysis-content code {
+  padding: 3px 6px;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+.business-question-page .analysis-content pre {
+  max-width: 100%;
+  padding: 17px;
+  overflow-x: auto;
+  background: #f1f5fb;
+  border: 1px solid #dce6f3;
+  border-radius: 11px;
+}
+
+.business-question-page .analysis-content pre code {
+  padding: 0;
+  background: transparent;
+  color: #334155;
+}
+
+.business-question-page .analysis-content hr {
+  margin: 25px 0;
+  border: 0;
+  border-top: 1px solid #e3ebf6;
+}
+
+.business-question-page .analysis-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* ========================================
+   EXPLORE MORE TOPICS
+======================================== */
+
+.topic-section {
+  padding: clamp(23px, 4vw, 33px);
+  background: #ffffff;
+  border: 1px solid #dfe8f4;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(16, 33, 61, 0.04);
+}
+
+.topic-section > h2 {
+  margin: 0 0 8px;
+  color: #10213d;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+}
+
+.topic-section > p {
+  margin: 0 0 23px;
+  color: #718096;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.business-question-page .topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.business-question-page .topic-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  min-width: 0;
+  min-height: 115px;
+  padding: 17px;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid #e0e8f3;
+  border-radius: 14px;
+  text-align: left;
+  transition: background 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.business-question-page .topic-card:hover:not(:disabled) {
+  background: #f7faff;
+  border-color: #9fc3fa;
+  box-shadow: 0 7px 19px rgba(37, 99, 235, 0.07);
+  transform: translateY(-2px);
+}
+
+.business-question-page .topic-card.selected {
+  background: #eff6ff;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.08);
+}
+
+.business-question-page .topic-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 43px;
+  width: 43px;
+  height: 43px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  font-size: 21px;
+}
+
+.business-question-page .topic-card-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.business-question-page .topic-card-text strong {
+  color: #1e3352;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.business-question-page .topic-card-text > span {
+  color: #718096;
+  font-size: 11px;
+  line-height: 1.75;
+}
+
+.business-question-page .topic-arrow {
+  flex: 0 0 auto;
+  color: #3b82f6;
+  font-size: 19px;
+}
+
+/* Detailed topic answer */
+
+.business-question-page .topic-answer {
+  border-top: 3px solid #3b82f6;
+  scroll-margin-top: 30px;
+}
+
+.topic-answer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 23px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e5edf7;
+}
+
+.topic-answer-header h2 {
+  margin: 0;
+  color: #10213d;
+  font-size: clamp(21px, 3.5vw, 28px);
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+/* Loading and error states */
+
+.business-question-page .loading-message {
+  padding: 30px;
+  background: linear-gradient(135deg, #ffffff, #f0f6ff);
+  border: 1px solid #d6e5fa;
+  border-radius: 17px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(16, 33, 61, 0.045);
+}
+
+.business-question-page .loading-message h2,
+.business-question-page .loading-message h3 {
+  margin: 0 0 10px;
+  color: #1d4ed8;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.business-question-page .loading-message p {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.business-question-page .error-message {
+  padding: 22px;
+  background: #fff7f7;
+  border: 1px solid #fecaca;
+  border-radius: 14px;
+}
+
+.business-question-page .error-message p {
+  margin: 0 0 15px;
+  color: #b91c1c;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* Result action buttons */
+
+.business-question-page .report-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 5px;
+}
+
+/* Keyboard focus */
+
+.business-question-page .option-button:focus-visible,
+.business-question-page .topic-card:focus-visible,
+.business-question-page .next-button:focus-visible,
+.business-question-page .back-button:focus-visible,
+.business-question-page .skip-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.3);
+  outline-offset: 3px;
+}
+
+/* ========================================
+   RESPONSIVE LAYOUT
+======================================== */
+
+@media (max-width: 650px) {
+  .business-question-page {
+    padding: 35px 15px 55px;
+  }
+
+  .question-header {
+    margin-bottom: 26px;
+  }
+
+  .question-header h1 {
+    letter-spacing: -1px;
+  }
+
+  .question-subtitle {
+    font-size: 13px;
+  }
+
+  .progress-section {
+    padding: 16px;
+  }
+
+  .business-question-page .question-card {
+    padding: 22px 17px;
+    border-radius: 17px;
+  }
+
+  .business-question-page .business-options,
+  .business-question-page .topic-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .business-question-page .option-button {
+    min-height: 51px;
+  }
+
+  .question-actions {
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .right-actions {
+    flex: 1;
+  }
+
+  .business-question-page .next-button {
+    flex: 1;
+  }
+
+  .business-question-page .analysis-content {
+    padding: 22px 17px;
+    border-radius: 16px;
+    font-size: 13px;
+  }
+
+  .business-question-page .analysis-content h2 {
+    margin-top: 24px;
+    font-size: 20px;
+  }
+
+  .business-question-page .analysis-content h3 {
+    font-size: 16px;
+  }
+
+  .topic-section {
+    padding: 22px 17px;
+  }
+
+  .business-question-page .topic-card {
+    min-height: 0;
+  }
+
+  .topic-answer-header {
+    align-items: flex-start;
+  }
+
+  .business-question-page .report-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .business-question-page .report-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .business-question-page {
+    padding-right: 11px;
+    padding-left: 11px;
+  }
+
+  .question-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .question-actions > .back-button {
+    width: 100%;
+  }
+
+  .right-actions {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .business-question-page .analysis-content table {
+    font-size: 11px;
+  }
+
+  .business-question-page .analysis-content th,
+  .business-question-page .analysis-content td {
+    padding: 10px;
+  }
+}
+
+/* Print / Save as PDF */
+
+@media print {
+  body {
+    background: #ffffff !important;
+  }
+
+  .navbar,
+  .site-footer,
+  .question-header,
+  .progress-section,
+  .question-card,
+  .skip-info,
+  .topic-section,
+  .report-actions,
+  .topic-answer-header .back-button {
+    display: none !important;
+  }
+
+  .business-question-page {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .question-container {
+    width: 100%;
+    max-width: none;
+  }
+
+  .analysis-result {
+    gap: 15px;
+  }
+
+  .analysis-header,
+  .business-question-page .analysis-content {
+    padding: 20px;
+    box-shadow: none;
+    border: 1px solid #d5dce7;
+    break-inside: avoid;
+  }
+
+  .business-question-page .analysis-content table {
+    display: table;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .business-question-page .analysis-content h2,
+  .business-question-page .analysis-content h3 {
+    break-after: avoid;
+  }
 }
