@@ -11,8 +11,7 @@ import {
 } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
-const API_URL = "http://localhost:8080/api/news";
+const API_URL = "https://bizmate-ai-o5j7.onrender.com/api/news";
 
 const CATEGORIES = [
   {

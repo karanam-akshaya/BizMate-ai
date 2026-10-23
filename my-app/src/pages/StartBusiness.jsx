@@ -3,7 +3,7 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const API_URL = "http://localhost:8080/api/business/analyze";
+const API_URL =  "https://bizmate-ai-1.onrender.com/api/business/analyze";
 
 function StartBusiness() {
   const questions = [
