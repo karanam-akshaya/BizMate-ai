@@ -55,3 +55,13 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Local uploaded files and test data
+/uploads/
+/sample-upload.txt
+/test-upload.txt
+
+# Ignore local uploads and test files in any subfolder
+**/uploads/
+**/sample-upload.txt
+**/test-upload.txt
