@@ -1,12 +1,18 @@
 
 package com.bizmate.bizmate_backend.controller;
 
+import com.bizmate.bizmate_backend.entity.BusinessAnalysis;
+import com.bizmate.bizmate_backend.entity.User;
+import com.bizmate.bizmate_backend.repository.BusinessAnalysisRepository;
+import com.bizmate.bizmate_backend.repository.UserRepository;
 import com.bizmate.bizmate_backend.service.GeminiService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -18,13 +24,20 @@ import java.util.Map;
 public class BusinessController {
 
     private final GeminiService geminiService;
+    private final BusinessAnalysisRepository businessAnalysisRepository;
+    private final UserRepository userRepository;
 
-    public BusinessController(GeminiService geminiService) {
+    public BusinessController(
+            GeminiService geminiService,
+            BusinessAnalysisRepository businessAnalysisRepository,
+            UserRepository userRepository) {
         this.geminiService = geminiService;
+        this.businessAnalysisRepository = businessAnalysisRepository;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/analyze")
-    public ResponseEntity<Map<String, String>> analyzeBusiness(
+    public ResponseEntity<Map<String, Object>> analyzeBusiness(
             @RequestBody AnalyzeRequest request) {
 
         // 1. Validate the incoming request
@@ -56,7 +69,21 @@ public class BusinessController {
             );
         }
 
-        // 2. Read the business details
+        if (request.getUserId() == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "User ID is required. Please log in first."
+            );
+        }
+
+        // 2. Find the user who requested the analysis
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found. Please log in again."
+                ));
+
+        // 3. Read the business details
         String businessIdea = request.getBusinessIdea().trim();
         String location = request.getLocation().trim();
         String budget = request.getBudget().trim();
@@ -66,13 +93,11 @@ public class BusinessController {
                 "Not specified"
         );
 
-        // An empty topic requests the initial business summary.
-        // A selected topic requests a detailed, topic-specific analysis.
         String topic = request.getTopic() == null
                 ? ""
                 : request.getTopic().trim();
 
-        // 3. Send all details to GeminiService
+        // 4. Generate the analysis using Gemini
         String analysis;
 
         try {
@@ -96,7 +121,7 @@ public class BusinessController {
             );
         }
 
-        // 4. Validate Gemini's response
+        // 5. Check that Gemini returned a result
         if (analysis == null || analysis.isBlank()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_GATEWAY,
@@ -104,10 +129,25 @@ public class BusinessController {
             );
         }
 
-        // 5. Return the result to React as JSON
-        return ResponseEntity.ok(
-                Map.of("analysis", analysis)
-        );
+        // 6. Save the analysis in MySQL
+        BusinessAnalysis savedAnalysis = new BusinessAnalysis();
+        savedAnalysis.setUser(user);
+        savedAnalysis.setBusinessIdea(businessIdea);
+        savedAnalysis.setLocation(location);
+        savedAnalysis.setBudget(budget);
+        savedAnalysis.setTargetAudience(targetAudience);
+        savedAnalysis.setTopic(topic);
+        savedAnalysis.setAnalysisResult(analysis);
+
+        BusinessAnalysis saved =
+                businessAnalysisRepository.save(savedAnalysis);
+
+        // 7. Return the result and saved record ID to React
+        Map<String, Object> response = new HashMap<>();
+        response.put("analysis", analysis);
+        response.put("id", saved.getId());
+
+        return ResponseEntity.ok(response);
     }
 
     private boolean isBlank(String value) {
@@ -118,7 +158,7 @@ public class BusinessController {
         return isBlank(value) ? defaultValue : value.trim();
     }
 
-    // Request model: receives data sent by the React frontend
+    // Receives the request sent by the React frontend
     public static class AnalyzeRequest {
 
         private String businessIdea;
@@ -126,6 +166,7 @@ public class BusinessController {
         private String budget;
         private String targetAudience;
         private String topic;
+        private Integer userId;
 
         public AnalyzeRequest() {
         }
@@ -168,6 +209,14 @@ public class BusinessController {
 
         public void setTopic(String topic) {
             this.topic = topic;
+        }
+
+        public Integer getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Integer userId) {
+            this.userId = userId;
         }
     }
 }

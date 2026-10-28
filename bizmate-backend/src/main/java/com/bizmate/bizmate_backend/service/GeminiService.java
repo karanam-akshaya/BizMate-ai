@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientResponseException;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -31,14 +33,19 @@ public class GeminiService {
         this.model = model;
         this.baseUrl = baseUrl;
 
-        this.restClient = RestClient.create();
+        SimpleClientHttpRequestFactory requestFactory =
+                new SimpleClientHttpRequestFactory();
+
+        requestFactory.setConnectTimeout(Duration.ofSeconds(15));
+        requestFactory.setReadTimeout(Duration.ofSeconds(90));
+
+        this.restClient = RestClient.builder()
+                .requestFactory(requestFactory)
+                .build();
+
         this.mapper = new ObjectMapper();
     }
 
-    /**
-     * Generates the initial business report, a full report,
-     * or a selected-topic answer.
-     */
     public String analyze(
             String businessIdea,
             String location,
@@ -74,7 +81,6 @@ public class GeminiService {
                 + model
                 + ":generateContent";
 
-        // Allow enough output for all seven sections.
         int maxTokens = selectedTopic.isBlank() ? 4500 : 4000;
 
         Map<String, Object> requestBody = Map.of(
@@ -104,6 +110,7 @@ public class GeminiService {
                     .uri(endpoint)
                     .header("x-goog-api-key", apiKey)
                     .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
                     .body(requestBody)
                     .retrieve()
                     .body(String.class);
@@ -209,10 +216,6 @@ public class GeminiService {
         }
     }
 
-    /**
-     * Creates the initial report, detailed report,
-     * or response for a selected topic.
-     */
     private String buildPrompt(
             String businessIdea,
             String location,
@@ -245,7 +248,6 @@ public class GeminiService {
                 ? ""
                 : topic.trim().toLowerCase(Locale.ROOT);
 
-        // 1. Initial report: all seven sections plus final recommendations.
         if (normalizedTopic.isBlank()) {
 
             return """
@@ -388,7 +390,6 @@ public class GeminiService {
                     """.formatted(businessDetails);
         }
 
-        // 2. Detailed business report.
         if (normalizedTopic.equals("full report")
                 || normalizedTopic.equals("full business report")) {
 
@@ -452,7 +453,6 @@ public class GeminiService {
                     """.formatted(businessDetails);
         }
 
-        // 3. Individual topic responses.
         String topicInstructions = switch (normalizedTopic) {
 
             case "target customers" ->
